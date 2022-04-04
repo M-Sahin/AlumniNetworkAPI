@@ -1,4 +1,6 @@
-﻿namespace AlumniNetworkAPI.Models.Domain
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace AlumniNetworkAPI.Models.Domain
 {
     public class User
     {
