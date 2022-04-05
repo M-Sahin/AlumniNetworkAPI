@@ -25,6 +25,7 @@ namespace AlumniNetworkAPI.Models.Domain
         public string fun_fact { get; set; }
 
         public ICollection<Group> Groups { get; set; }
+        public ICollection<Topic> Topics { get; set; }
 
     }
 }

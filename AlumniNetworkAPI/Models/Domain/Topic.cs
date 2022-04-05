@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace AlumniNetworkAPI.Models.Domain
 {
@@ -13,5 +14,7 @@ namespace AlumniNetworkAPI.Models.Domain
         [Required]
         [MaxLength(500)]
         public string description { get; set; }
+
+        public ICollection<User> Users { get; set; }
     }
 }
