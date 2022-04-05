@@ -50,14 +50,21 @@ namespace AlumniNetworkAPI.Controllers
         // PUT: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
+        public async Task<IActionResult> UserUpdate(int id, UserUpdateDTO newUser)
         {
-            if (id != user.userId)
+            if (!UserExists(id))
+            {
+                return NotFound();
+            }
+
+            var domainUser = _mapper.Map<User>(newUser);
+
+            if (id != domainUser.userId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(user).State = EntityState.Modified;
+            _context.Entry(domainUser).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
 
             try
             {
@@ -65,14 +72,7 @@ namespace AlumniNetworkAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
             return NoContent();
@@ -92,22 +92,6 @@ namespace AlumniNetworkAPI.Controllers
             var UserToSend = _mapper.Map<UserReadDTO>(domainUser);
 
             return CreatedAtAction("GetUser", new { id = domainUser.userId }, UserToSend);
-        }
-
-            // DELETE: api/Users/5
-            [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
-        {
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
         }
 
         private bool UserExists(int id)

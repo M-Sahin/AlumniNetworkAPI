@@ -8,7 +8,8 @@ namespace AlumniNetworkAPI.Models.DTO.User
 {
     public class UserUpdateDTO
     {
-    
+        [Key]
+        public int userId { get; set; }
 
         [Required]
         [MaxLength(100)]

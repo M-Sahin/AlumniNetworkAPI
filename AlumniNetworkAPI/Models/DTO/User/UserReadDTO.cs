@@ -8,6 +8,7 @@ namespace AlumniNetworkAPI.Models.DTO.User
 {
     public class UserReadDTO
     {
+        [Key]
         public int userId { get; set; }
 
         [Required]
