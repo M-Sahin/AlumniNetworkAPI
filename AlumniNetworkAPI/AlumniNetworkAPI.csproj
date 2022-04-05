@@ -24,10 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\DTO\Group\" />
     <Folder Include="Models\DTO\Event\" />
     <Folder Include="Models\DTO\Post\" />
-    <Folder Include="Models\DTO\Topic\" />
     <Folder Include="Services\" />
   </ItemGroup>
 
