@@ -25,7 +25,6 @@
 
   <ItemGroup>
     <Folder Include="Models\DTO\Event\" />
-    <Folder Include="Models\DTO\Post\" />
     <Folder Include="Services\" />
   </ItemGroup>
 
