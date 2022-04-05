@@ -1,13 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace AlumniNetworkAPI.Models.Domain
+namespace AlumniNetworkAPI.Models.DTO.User
 {
-    public class User
+    public class UserUpdateDTO
     {
-        [Key]
-        public int userId { get; set; }
+    
 
-        // Properties
         [Required]
         [MaxLength(100)]
         public string name { get; set; }
@@ -22,6 +24,5 @@ namespace AlumniNetworkAPI.Models.Domain
         public string bio { get; set; }
         [MaxLength(50)]
         public string fun_fact { get; set; }
-
     }
 }

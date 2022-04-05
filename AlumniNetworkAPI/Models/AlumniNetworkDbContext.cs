@@ -12,6 +12,7 @@ namespace AlumniNetworkAPI.Models
 
 
         public DbSet<User> Users { get; set; }
+        public object User { get; internal set; }
 
         public AlumniNetworkDbContext(DbContextOptions options) : base(options)
             {
