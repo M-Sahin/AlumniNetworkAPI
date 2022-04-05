@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace AlumniNetworkAPI.Models.Domain
 {
@@ -22,6 +23,8 @@ namespace AlumniNetworkAPI.Models.Domain
         public string bio { get; set; }
         [MaxLength(50)]
         public string fun_fact { get; set; }
+
+        public ICollection<Group> Groups { get; set; }
 
     }
 }

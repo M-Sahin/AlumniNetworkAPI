@@ -20,8 +20,6 @@ namespace AlumniNetworkAPI.Models
         public object Topic { get; internal set; }
 
 
-
-
         public AlumniNetworkDbContext(DbContextOptions options) : base(options)
             {
 

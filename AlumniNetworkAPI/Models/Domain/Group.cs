@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
 
 namespace AlumniNetworkAPI.Models.Domain
 {
@@ -16,5 +18,8 @@ namespace AlumniNetworkAPI.Models.Domain
 
         [Required]
         public bool isPrivate { get; set; }
+
+        public ICollection<User> Users { get; set; }
+
     }
 }

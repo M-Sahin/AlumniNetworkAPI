@@ -3,14 +3,16 @@ using AlumniNetworkAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AlumniNetworkAPI.Migrations
 {
     [DbContext(typeof(AlumniNetworkDbContext))]
-    partial class AlumniNetworkDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220405121146_migration03")]
+    partial class migration03
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -100,36 +102,6 @@ namespace AlumniNetworkAPI.Migrations
                     b.HasKey("userId");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("GroupUser", b =>
-                {
-                    b.Property<int>("Groupsgroup_id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UsersuserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Groupsgroup_id", "UsersuserId");
-
-                    b.HasIndex("UsersuserId");
-
-                    b.ToTable("GroupUser");
-                });
-
-            modelBuilder.Entity("GroupUser", b =>
-                {
-                    b.HasOne("AlumniNetworkAPI.Models.Domain.Group", null)
-                        .WithMany()
-                        .HasForeignKey("Groupsgroup_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AlumniNetworkAPI.Models.Domain.User", null)
-                        .WithMany()
-                        .HasForeignKey("UsersuserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
