@@ -1,18 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AlumniNetworkAPI.Models.Domain
 {
     public class User
     {
 
-        public User()
-        {
-            Groups = new HashSet<Group>();
-            Topics = new HashSet<Topic>();
-            Posts = new HashSet<Post>();
-
-        }
 
         [Key]
         public int userId { get; set; }
@@ -35,7 +29,10 @@ namespace AlumniNetworkAPI.Models.Domain
 
         public ICollection<Group> Groups { get; set; }
         public ICollection<Topic> Topics { get; set; }
-        public ICollection<Post> Posts { get; set; }
+        [InverseProperty("SenderUserId")]
+        public ICollection<Post> SenderPosts { get; set; }
+        [InverseProperty("TargetUserId")]
+        public ICollection<Post> TargetPosts { get; set; }
 
 
 

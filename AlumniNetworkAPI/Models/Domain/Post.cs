@@ -20,20 +20,15 @@ namespace AlumniNetworkAPI.Models.Domain
         [Timestamp]
         public DateTime TimeStamp { get; set; } = DateTime.Now;
         [Required]
-        public int? SenderId { get; set; }
-        public User? Sender { get; set; }
+        public User SenderUserId { get; set; }
 
-        public int? ReplyParentId { get; set; }
-        public Post? ReplyParent { get; set; }
+        public Post? ReplyParentId { get; set; }
+
+        public User? TargetUserId { get; set; }
         
-        public int? TargetUserId { get; set; }
-        public User? TargetUser { get; set; }
+        public Group? TargetGroupId { get; set; }
         
-        public int? TargetGroupId { get; set; }
-        public Group? TargetGroup { get; set; }
-        
-        public int? TargetTopicId { get; set; }
-        public Topic? TargetTopic { get; set; }
+        public Topic? TargetTopicId { get; set; }
 
         public ICollection<Post> Replies { get; set; }
 
