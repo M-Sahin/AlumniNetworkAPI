@@ -16,9 +16,8 @@ namespace AlumniNetworkAPI.Models.Domain
         [Required]
         [MaxLength(500, ErrorMessage = "Text cant be longer than 500 characters.")]
         public string Body { get; set; }
-        
-        [Timestamp]
-        public DateTime TimeStamp { get; set; } = DateTime.Now;
+
+        public DateTime TimeStamp { get; set; }
         [Required]
         public User SenderUserId { get; set; }
 

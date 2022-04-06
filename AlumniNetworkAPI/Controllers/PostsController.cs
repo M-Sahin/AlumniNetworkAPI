@@ -19,25 +19,25 @@ namespace AlumniNetworkAPI.Controllers
         private readonly AlumniNetworkDbContext _context;
         private readonly IMapper _mapper;
 
-
         public PostsController(AlumniNetworkDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
+
         }
 
         // GET: api/Posts
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Post>>> GetPost()
+        public async Task<ActionResult<IEnumerable<Post>>> GetPosts()
         {
-            return await _context.Post.ToListAsync();
+            return await _context.Posts.ToListAsync();
         }
 
         // GET: api/Posts/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Post>> GetPost(int id)
         {
-            var post = await _context.Post.FindAsync(id);
+            var post = await _context.Posts.FindAsync(id);
 
             if (post == null)
             {
@@ -85,26 +85,26 @@ namespace AlumniNetworkAPI.Controllers
         {
             var domainPost = _mapper.Map<Post>(post);
 
-            _context.Post.Add(domainPost);
+            _context.Posts.Add(domainPost);
 
             await _context.SaveChangesAsync();
 
             var PostToSend = _mapper.Map<PostReadDTO>(domainPost);
 
-            return CreatedAtAction("GetPost", new { id = domainPost.Post_Id }, PostToSend);
+            return CreatedAtAction("getPost", new { id = domainPost.Post_Id }, PostToSend);
         }
 
         // DELETE: api/Posts/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePost(int id)
         {
-            var post = await _context.Post.FindAsync(id);
+            var post = await _context.Posts.FindAsync(id);
             if (post == null)
             {
                 return NotFound();
             }
 
-            _context.Post.Remove(post);
+            _context.Posts.Remove(post);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -112,7 +112,7 @@ namespace AlumniNetworkAPI.Controllers
 
         private bool PostExists(int id)
         {
-            return _context.Post.Any(e => e.Post_Id == id);
+            return _context.Posts.Any(e => e.Post_Id == id);
         }
     }
 }

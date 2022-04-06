@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+
 
 namespace AlumniNetworkAPI.Models.DTO.Post
 {
@@ -9,6 +11,8 @@ namespace AlumniNetworkAPI.Models.DTO.Post
         public string Title { get; set; }
         public string Body { get; set; }
         public DateTime Timestamp { get; set; }
+        public List<int> Replies { get; set; }
+
 
     }
 }
