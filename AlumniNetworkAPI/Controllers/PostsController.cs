@@ -85,6 +85,8 @@ namespace AlumniNetworkAPI.Controllers
         {
             var domainPost = _mapper.Map<Post>(post);
 
+            domainPost.TimeStamp = DateTime.Now;
+
             _context.Posts.Add(domainPost);
 
             await _context.SaveChangesAsync();

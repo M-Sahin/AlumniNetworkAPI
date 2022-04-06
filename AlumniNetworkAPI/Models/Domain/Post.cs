@@ -18,16 +18,22 @@ namespace AlumniNetworkAPI.Models.Domain
         public string Body { get; set; }
 
         public DateTime TimeStamp { get; set; }
+
         [Required]
-        public User SenderUserId { get; set; }
+        public int? SenderUserId { get; set; }
+        public User SenderUser { get; set; }
 
-        public Post? ReplyParentId { get; set; }
+        public int? ReplyParentId { get; set; }
+        public Post ReplyParent { get; set; }
 
-        public User? TargetUserId { get; set; }
-        
-        public Group? TargetGroupId { get; set; }
-        
-        public Topic? TargetTopicId { get; set; }
+        public int? TargetUserId { get; set; }
+        public User TargetUser { get; set; }
+
+        public int? TargetGroupId { get; set; }
+        public Group TargetGroup { get; set; }
+
+        public int? TargetTopicId { get; set; }
+        public Topic TargetTopic { get; set; }
 
         public ICollection<Post> Replies { get; set; }
 

@@ -29,9 +29,9 @@ namespace AlumniNetworkAPI.Models.Domain
 
         public ICollection<Group> Groups { get; set; }
         public ICollection<Topic> Topics { get; set; }
-        [InverseProperty("SenderUserId")]
+        [InverseProperty("SenderUser")]
         public ICollection<Post> SenderPosts { get; set; }
-        [InverseProperty("TargetUserId")]
+        [InverseProperty("TargetUser")]
         public ICollection<Post> TargetPosts { get; set; }
 
 

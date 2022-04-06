@@ -11,6 +11,7 @@ namespace AlumniNetworkAPI.Models.DTO.Post
         public string Title { get; set; }
         public string Body { get; set; }
         public DateTime Timestamp { get; set; }
+        public int SenderUserId { get; set; }
         public List<int> Replies { get; set; }
 
 

@@ -79,7 +79,7 @@ namespace AlumniNetworkAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Post",
+                name: "Posts",
                 columns: table => new
                 {
                     Post_Id = table.Column<int>(type: "int", nullable: false)
@@ -87,42 +87,42 @@ namespace AlumniNetworkAPI.Migrations
                     Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Body = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     TimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    SenderUserIduserId = table.Column<int>(type: "int", nullable: false),
-                    ReplyParentIdPost_Id = table.Column<int>(type: "int", nullable: true),
-                    TargetUserIduserId = table.Column<int>(type: "int", nullable: true),
-                    TargetGroupIdgroup_id = table.Column<int>(type: "int", nullable: true),
-                    TargetTopicIdtopic_id = table.Column<int>(type: "int", nullable: true)
+                    SenderUserId = table.Column<int>(type: "int", nullable: false),
+                    ReplyParentId = table.Column<int>(type: "int", nullable: true),
+                    TargetUserId = table.Column<int>(type: "int", nullable: true),
+                    TargetGroupId = table.Column<int>(type: "int", nullable: true),
+                    TargetTopicId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Post", x => x.Post_Id);
+                    table.PrimaryKey("PK_Posts", x => x.Post_Id);
                     table.ForeignKey(
-                        name: "FK_Post_Groups_TargetGroupIdgroup_id",
-                        column: x => x.TargetGroupIdgroup_id,
+                        name: "FK_Posts_Groups_TargetGroupId",
+                        column: x => x.TargetGroupId,
                         principalTable: "Groups",
                         principalColumn: "group_id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Post_Post_ReplyParentIdPost_Id",
-                        column: x => x.ReplyParentIdPost_Id,
-                        principalTable: "Post",
+                        name: "FK_Posts_Posts_ReplyParentId",
+                        column: x => x.ReplyParentId,
+                        principalTable: "Posts",
                         principalColumn: "Post_Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Post_Topics_TargetTopicIdtopic_id",
-                        column: x => x.TargetTopicIdtopic_id,
+                        name: "FK_Posts_Topics_TargetTopicId",
+                        column: x => x.TargetTopicId,
                         principalTable: "Topics",
                         principalColumn: "topic_id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Post_Users_SenderUserIduserId",
-                        column: x => x.SenderUserIduserId,
+                        name: "FK_Posts_Users_SenderUserId",
+                        column: x => x.SenderUserId,
                         principalTable: "Users",
                         principalColumn: "userId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Post_Users_TargetUserIduserId",
-                        column: x => x.TargetUserIduserId,
+                        name: "FK_Posts_Users_TargetUserId",
+                        column: x => x.TargetUserId,
                         principalTable: "Users",
                         principalColumn: "userId",
                         onDelete: ReferentialAction.Restrict);
@@ -158,29 +158,29 @@ namespace AlumniNetworkAPI.Migrations
                 column: "UsersuserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Post_ReplyParentIdPost_Id",
-                table: "Post",
-                column: "ReplyParentIdPost_Id");
+                name: "IX_Posts_ReplyParentId",
+                table: "Posts",
+                column: "ReplyParentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Post_SenderUserIduserId",
-                table: "Post",
-                column: "SenderUserIduserId");
+                name: "IX_Posts_SenderUserId",
+                table: "Posts",
+                column: "SenderUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Post_TargetGroupIdgroup_id",
-                table: "Post",
-                column: "TargetGroupIdgroup_id");
+                name: "IX_Posts_TargetGroupId",
+                table: "Posts",
+                column: "TargetGroupId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Post_TargetTopicIdtopic_id",
-                table: "Post",
-                column: "TargetTopicIdtopic_id");
+                name: "IX_Posts_TargetTopicId",
+                table: "Posts",
+                column: "TargetTopicId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Post_TargetUserIduserId",
-                table: "Post",
-                column: "TargetUserIduserId");
+                name: "IX_Posts_TargetUserId",
+                table: "Posts",
+                column: "TargetUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TopicUser_UsersuserId",
@@ -194,7 +194,7 @@ namespace AlumniNetworkAPI.Migrations
                 name: "GroupUser");
 
             migrationBuilder.DropTable(
-                name: "Post");
+                name: "Posts");
 
             migrationBuilder.DropTable(
                 name: "TopicUser");

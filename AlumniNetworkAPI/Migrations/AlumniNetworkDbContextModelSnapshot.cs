@@ -56,19 +56,19 @@ namespace AlumniNetworkAPI.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<int?>("ReplyParentIdPost_Id")
+                    b.Property<int?>("ReplyParentId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SenderUserIduserId")
+                    b.Property<int?>("SenderUserId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TargetGroupIdgroup_id")
+                    b.Property<int?>("TargetGroupId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TargetTopicIdtopic_id")
+                    b.Property<int?>("TargetTopicId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TargetUserIduserId")
+                    b.Property<int?>("TargetUserId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("TimeStamp")
@@ -80,17 +80,17 @@ namespace AlumniNetworkAPI.Migrations
 
                     b.HasKey("Post_Id");
 
-                    b.HasIndex("ReplyParentIdPost_Id");
+                    b.HasIndex("ReplyParentId");
 
-                    b.HasIndex("SenderUserIduserId");
+                    b.HasIndex("SenderUserId");
 
-                    b.HasIndex("TargetGroupIdgroup_id");
+                    b.HasIndex("TargetGroupId");
 
-                    b.HasIndex("TargetTopicIdtopic_id");
+                    b.HasIndex("TargetTopicId");
 
-                    b.HasIndex("TargetUserIduserId");
+                    b.HasIndex("TargetUserId");
 
-                    b.ToTable("Post");
+                    b.ToTable("Posts");
                 });
 
             modelBuilder.Entity("AlumniNetworkAPI.Models.Domain.Topic", b =>
@@ -184,37 +184,35 @@ namespace AlumniNetworkAPI.Migrations
 
             modelBuilder.Entity("AlumniNetworkAPI.Models.Domain.Post", b =>
                 {
-                    b.HasOne("AlumniNetworkAPI.Models.Domain.Post", "ReplyParentId")
+                    b.HasOne("AlumniNetworkAPI.Models.Domain.Post", "ReplyParent")
                         .WithMany("Replies")
-                        .HasForeignKey("ReplyParentIdPost_Id");
+                        .HasForeignKey("ReplyParentId");
 
-                    b.HasOne("AlumniNetworkAPI.Models.Domain.User", "SenderUserId")
+                    b.HasOne("AlumniNetworkAPI.Models.Domain.User", "SenderUser")
                         .WithMany("SenderPosts")
-                        .HasForeignKey("SenderUserIduserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SenderUserId");
 
-                    b.HasOne("AlumniNetworkAPI.Models.Domain.Group", "TargetGroupId")
+                    b.HasOne("AlumniNetworkAPI.Models.Domain.Group", "TargetGroup")
                         .WithMany("Posts")
-                        .HasForeignKey("TargetGroupIdgroup_id");
+                        .HasForeignKey("TargetGroupId");
 
-                    b.HasOne("AlumniNetworkAPI.Models.Domain.Topic", "TargetTopicId")
+                    b.HasOne("AlumniNetworkAPI.Models.Domain.Topic", "TargetTopic")
                         .WithMany("Posts")
-                        .HasForeignKey("TargetTopicIdtopic_id");
+                        .HasForeignKey("TargetTopicId");
 
-                    b.HasOne("AlumniNetworkAPI.Models.Domain.User", "TargetUserId")
+                    b.HasOne("AlumniNetworkAPI.Models.Domain.User", "TargetUser")
                         .WithMany("TargetPosts")
-                        .HasForeignKey("TargetUserIduserId");
+                        .HasForeignKey("TargetUserId");
 
-                    b.Navigation("ReplyParentId");
+                    b.Navigation("ReplyParent");
 
-                    b.Navigation("SenderUserId");
+                    b.Navigation("SenderUser");
 
-                    b.Navigation("TargetGroupId");
+                    b.Navigation("TargetGroup");
 
-                    b.Navigation("TargetTopicId");
+                    b.Navigation("TargetTopic");
 
-                    b.Navigation("TargetUserId");
+                    b.Navigation("TargetUser");
                 });
 
             modelBuilder.Entity("GroupUser", b =>
