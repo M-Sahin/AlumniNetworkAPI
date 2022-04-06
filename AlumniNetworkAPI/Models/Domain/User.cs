@@ -11,6 +11,7 @@ namespace AlumniNetworkAPI.Models.Domain
             Groups = new HashSet<Group>();
             Topics = new HashSet<Topic>();
             Posts = new HashSet<Post>();
+
         }
 
         [Key]
@@ -34,7 +35,9 @@ namespace AlumniNetworkAPI.Models.Domain
 
         public ICollection<Group> Groups { get; set; }
         public ICollection<Topic> Topics { get; set; }
-        public ICollection <Post> Posts { get; set;}
+        public ICollection<Post> Posts { get; set; }
+
+
 
     }
 }

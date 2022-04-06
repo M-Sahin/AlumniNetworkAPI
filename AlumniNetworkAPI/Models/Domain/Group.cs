@@ -20,6 +20,7 @@ namespace AlumniNetworkAPI.Models.Domain
         public bool isPrivate { get; set; }
 
         public ICollection<User> Users { get; set; }
+        public ICollection<Post> Posts { get; set; }
 
     }
 }
