@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace AlumniNetworkAPI.Models.Domain
+namespace AlumniNetworkAPI.Models.DTO.Topic
 {
-    public class Topic
+    public class TopicUpdateDTO
     {
         [Key]
         public int topic_id { get; set; }
@@ -14,9 +17,6 @@ namespace AlumniNetworkAPI.Models.Domain
         [Required]
         [MaxLength(500)]
         public string description { get; set; }
-
-        public ICollection<User> Users { get; set; }
-        public ICollection<Post> Posts { get; set; }
 
     }
 }

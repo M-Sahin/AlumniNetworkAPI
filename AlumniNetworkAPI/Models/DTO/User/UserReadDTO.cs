@@ -1,23 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace AlumniNetworkAPI.Models.Domain
+namespace AlumniNetworkAPI.Models.DTO.User
 {
-    public class User
+    public class UserReadDTO
     {
-
-        public User()
-        {
-            Groups = new HashSet<Group>();
-            Topics = new HashSet<Topic>();
-            Posts = new HashSet<Post>();
-
-        }
-
         [Key]
         public int userId { get; set; }
 
-        // Properties
         [Required]
         [MaxLength(100)]
         public string name { get; set; }
@@ -32,12 +25,5 @@ namespace AlumniNetworkAPI.Models.Domain
         public string bio { get; set; }
         [MaxLength(50)]
         public string fun_fact { get; set; }
-
-        public ICollection<Group> Groups { get; set; }
-        public ICollection<Topic> Topics { get; set; }
-        public ICollection<Post> Posts { get; set; }
-
-
-
     }
 }

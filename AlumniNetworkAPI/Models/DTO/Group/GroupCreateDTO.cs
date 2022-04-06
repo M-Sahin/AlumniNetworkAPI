@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace AlumniNetworkAPI.Models.Domain
+namespace AlumniNetworkAPI.Models.DTO.Group
 {
-    public class Topic
+    public class GroupCreateDTO
     {
-        [Key]
-        public int topic_id { get; set; }
 
         [Required]
         [MaxLength(50, ErrorMessage = "Name cant be more than 50 characters.")]
@@ -15,8 +16,7 @@ namespace AlumniNetworkAPI.Models.Domain
         [MaxLength(500)]
         public string description { get; set; }
 
-        public ICollection<User> Users { get; set; }
-        public ICollection<Post> Posts { get; set; }
-
+        [Required]
+        public bool isPrivate { get; set; }
     }
 }
