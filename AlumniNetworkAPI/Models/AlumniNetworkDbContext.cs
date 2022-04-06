@@ -25,5 +25,8 @@ namespace AlumniNetworkAPI.Models
 
             }
 
+
+        public DbSet<AlumniNetworkAPI.Models.Domain.Post> Post { get; set; }
+
     }
 }
