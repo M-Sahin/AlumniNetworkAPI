@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AlumniNetworkAPI.Migrations
 {
     [DbContext(typeof(AlumniNetworkDbContext))]
-    [Migration("20220406093736_Migration06")]
+    [Migration("20220406095821_Migration06")]
     partial class Migration06
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
