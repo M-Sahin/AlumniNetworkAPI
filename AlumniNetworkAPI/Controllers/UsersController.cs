@@ -12,26 +12,43 @@ using AutoMapper;
 using System.Security.Claims;
 using System.Net.Mime;
 using Microsoft.AspNetCore.Authorization;
+using AlumniNetworkAPI.Services;
+using AlumniNetworkAPI.Extensions;
+
 
 namespace AlumniNetworkAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly AlumniNetworkDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IUserService _userService;
 
-        public UsersController(AlumniNetworkDbContext context, IMapper mapper)
+        public UsersController(AlumniNetworkDbContext context, IMapper mapper, IUserService userService)
 
         {
             _context = context;
             _mapper = mapper;
+            _userService = userService;
         }
 
         //GET for fetching authenticated user
-        
-        
+        [HttpGet]
+        public async Task<IActionResult> GetUserAsync()
+        {
+            string keycloakId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            User user = await _userService.FindUserByKeycloakIdAsync(keycloakId);
+            if (user == null)
+            {
+                return StatusCode(StatusCodes.Status403Forbidden, "Access denied: Could not verify user.");
+            }
+            return this.SeeOther($"/api/[controller]/{user.userId}");
+        }
+
+
         // GET: api/Users
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
