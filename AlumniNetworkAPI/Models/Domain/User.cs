@@ -26,6 +26,7 @@ namespace AlumniNetworkAPI.Models.Domain
         public string bio { get; set; }
         [MaxLength(50)]
         public string fun_fact { get; set; }
+        public string? KeycloakId { get; set; }
 
         public ICollection<Group> Groups { get; set; }
         public ICollection<Topic> Topics { get; set; }

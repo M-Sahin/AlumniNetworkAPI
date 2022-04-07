@@ -15,7 +15,10 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-
+using Newtonsoft.Json;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Net.Http;
 
 namespace AlumniNetworkAPI
 {
@@ -31,6 +34,33 @@ namespace AlumniNetworkAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+           .AddJwtBearer(options =>
+           {
+               options.TokenValidationParameters = new TokenValidationParameters
+               {
+                   //Access token for postman can be found at http://localhost:8000/#
+                   //requires token from keycloak instance - location stored in secret manager
+                   IssuerSigningKeyResolver = (token, securityToken, kid, parameters) =>
+                   {
+                       var client = new HttpClient();
+                       var keyuri = Configuration["TokenSecrets:KeyURI"];
+                       //Retrieves the keys from keycloak instance to verify token
+                       var response = client.GetAsync(keyuri).Result;
+                       var responseString = response.Content.ReadAsStringAsync().Result;
+                       var keys = JsonConvert.DeserializeObject<JsonWebKeySet>(responseString);
+                       return keys.Keys;
+                   },
+
+                   ValidIssuers = new List<string>
+                   {
+                        Configuration["TokenSecrets:IssuerURI"]
+                   },
+
+                   //This checks the token for a the 'aud' claim value
+                   ValidAudience = "account",
+               };
+           });
 
             services.AddDbContext<AlumniNetworkDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
