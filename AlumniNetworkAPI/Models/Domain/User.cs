@@ -34,6 +34,9 @@ namespace AlumniNetworkAPI.Models.Domain
         [InverseProperty("TargetUser")]
         public ICollection<Post> TargetPosts { get; set; }
 
+        public List<GroupUser> GroupUsers { get; set; }
+
+
 
 
     }

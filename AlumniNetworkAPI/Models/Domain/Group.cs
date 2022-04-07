@@ -22,5 +22,8 @@ namespace AlumniNetworkAPI.Models.Domain
         public ICollection<User> Users { get; set; }
         public ICollection<Post> Posts { get; set; }
 
+        public List<GroupUser> GroupUsers { get; set; }
+
+
     }
 }

@@ -97,22 +97,28 @@ namespace AlumniNetworkAPI.Controllers
 
         // PUT: api/Post/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPatch("{id}")]
         public async Task<IActionResult> PostUpdate(int id, PostUpdateDTO newPost)
         {
-            if (!PostExists(id))
-            {
-                return NotFound();
-            }
+            var oldPost = await _context.Posts.AsNoTracking().Include(m => m.Replies).FirstOrDefaultAsync(m => m.Post_Id == id);
+
+            var checkGroup = await _context.Groups.AsNoTracking().FirstOrDefaultAsync(m => m.group_id == oldPost.TargetGroupId);
 
             var domainPost = _mapper.Map<Post>(newPost);
+
+            domainPost.TimeStamp = oldPost.TimeStamp;
+            domainPost.SenderUserId = oldPost.SenderUserId;
+            domainPost.ReplyParentId = oldPost.ReplyParentId;
+            domainPost.TargetUserId = oldPost.TargetUserId;
+            domainPost.TargetGroupId = oldPost.TargetGroupId;
+            domainPost.TargetTopicId = oldPost.TargetTopicId;
+
 
             if (id != domainPost.Post_Id)
             {
                 return BadRequest();
             }
-
-            _context.Entry(domainPost).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _context.Entry(domainPost).State = EntityState.Modified;
 
             try
             {
@@ -120,7 +126,14 @@ namespace AlumniNetworkAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                throw;
+                if (!PostExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
             }
 
             return NoContent();

@@ -218,7 +218,7 @@ namespace AlumniNetworkAPI.Migrations
                 });
 
             modelBuilder.Entity("GroupUser", b =>
-                {
+            {
                     b.HasOne("AlumniNetworkAPI.Models.Domain.Group", null)
                         .WithMany()
                         .HasForeignKey("Groupsgroup_id")
