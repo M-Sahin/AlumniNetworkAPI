@@ -9,6 +9,9 @@ using AlumniNetworkAPI.Models;
 using AlumniNetworkAPI.Models.Domain;
 using AlumniNetworkAPI.Models.DTO.User;
 using AutoMapper;
+using System.Security.Claims;
+using System.Net.Mime;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AlumniNetworkAPI.Controllers
 {
@@ -26,6 +29,9 @@ namespace AlumniNetworkAPI.Controllers
             _mapper = mapper;
         }
 
+        //GET for fetching authenticated user
+        
+        
         // GET: api/Users
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
