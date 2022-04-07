@@ -5,6 +5,11 @@
         public string Title { get; set; }
         public string Body { get; set; }
         public int? SenderUserId { get; set; }
+        public int? ReplyParentId { get; set; }
+        public int? TargetUserId { get; set; }
+        public int? TargetGroupId { get; set; }
+        public int? TargetTopicId { get; set; }
+
 
     }
 }

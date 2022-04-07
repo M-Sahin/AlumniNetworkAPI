@@ -35,29 +35,84 @@ namespace AlumniNetworkAPI.Controllers
 
         // GET: api/Posts/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Post>> GetPost(int id)
+        public async Task<ActionResult<PostReadDTO>> GetPost(int id)
         {
-            var post = await _context.Posts.FindAsync(id);
+            var post = await _context.Posts.Include(m => m.Replies).FirstOrDefaultAsync(m => m.Post_Id == id);
+
+
 
             if (post == null)
             {
                 return NotFound();
             }
 
-            return post;
+            var postToSend = _mapper.Map<PostReadDTO>(post);
+
+
+
+            return postToSend;
         }
 
-        // PUT: api/Posts/5
+        // GET: api/Posts/group/5
+        [HttpGet("group/{id}")]
+        public async Task<ActionResult<PostReadDTO>> getPostByGroup(int id)
+        {
+            var post = await _context.Posts.Include(m => m.Replies).FirstOrDefaultAsync(m => m.TargetGroupId == id);
+
+
+
+            if (post == null)
+            {
+                return NotFound();
+            }
+
+            var postToSend = _mapper.Map<PostReadDTO>(post);
+
+
+
+            return postToSend;
+        }
+
+        // GET: api/Posts/topic/5
+        [HttpGet("topic/{id}")]
+        public async Task<ActionResult<PostReadDTO>> getPostByTopic(int id)
+        {
+            var post = await _context.Posts.Include(m => m.Replies).FirstOrDefaultAsync(m => m.TargetTopicId == id);
+
+
+
+            if (post == null)
+            {
+                return NotFound();
+            }
+
+            var postToSend = _mapper.Map<PostReadDTO>(post);
+
+
+
+            return postToSend;
+        }
+
+
+
+        // PUT: api/Post/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPost(int id, Post post)
+        public async Task<IActionResult> PostUpdate(int id, PostUpdateDTO newPost)
         {
-            if (id != post.Post_Id)
+            if (!PostExists(id))
+            {
+                return NotFound();
+            }
+
+            var domainPost = _mapper.Map<Post>(newPost);
+
+            if (id != domainPost.Post_Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(post).State = EntityState.Modified;
+            _context.Entry(domainPost).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
 
             try
             {
@@ -65,14 +120,7 @@ namespace AlumniNetworkAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PostExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
             return NoContent();
