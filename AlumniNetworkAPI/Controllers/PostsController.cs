@@ -95,14 +95,12 @@ namespace AlumniNetworkAPI.Controllers
 
 
 
-        // PUT: api/Post/5
+        // patch: api/Post/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPatch("{id}")]
         public async Task<IActionResult> PostUpdate(int id, PostUpdateDTO newPost)
         {
             var oldPost = await _context.Posts.AsNoTracking().Include(m => m.Replies).FirstOrDefaultAsync(m => m.Post_Id == id);
-
-            var checkGroup = await _context.Groups.AsNoTracking().FirstOrDefaultAsync(m => m.group_id == oldPost.TargetGroupId);
 
             var domainPost = _mapper.Map<Post>(newPost);
 

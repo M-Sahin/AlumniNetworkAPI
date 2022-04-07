@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace AlumniNetworkAPI.Models.DTO.Event
 {
@@ -21,6 +22,8 @@ namespace AlumniNetworkAPI.Models.DTO.Event
         [Required]
         public string Banner_Image { get; set; }
 
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
         //Hieronder moet start en eiddatum komen
     }
 }

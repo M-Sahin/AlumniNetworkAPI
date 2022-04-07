@@ -34,8 +34,11 @@ namespace AlumniNetworkAPI.Models.Domain
         public ICollection<Post> SenderPosts { get; set; }
         [InverseProperty("TargetUser")]
         public ICollection<Post> TargetPosts { get; set; }
+        [InverseProperty("CreatedByUser")]
+        public ICollection<Event> Events { get; set; }
 
-        public List<GroupUser> GroupUsers { get; set; }
+        public ICollection<GroupUser> GroupUsers { get; set; }
+
 
 
 

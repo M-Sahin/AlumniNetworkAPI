@@ -64,22 +64,24 @@ namespace AlumniNetworkAPI.Controllers
             return CreatedAtAction("GetGroup", new { id = domainGroup.group_id }, GroupToSend);
         }
 
-        // POST: api/Group
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost("{userId}/{groupId}")]
-        public async Task<ActionResult<GroupUser>> JoinGroup(int userId, int groupId)
+        // GET: api/Groups/5
+        [HttpPost("{GroupId}/{UserId}")]
+        public async Task<ActionResult<Group>> PostGroupUser(int GroupId, int UserId)
         {
-            GroupUser groupUser = new GroupUser();
-            groupUser.Groupsgroup_id = groupId;
-            groupUser.UseruserId = userId;
 
-           // _context.GroupUsers.Add(groupUser);
+            GroupUser groupUser= new GroupUser(); 
+            groupUser.GroupId = GroupId;
+            groupUser.UserId = UserId;
+
+            Console.WriteLine(groupUser);
+
+            _context.GroupUsers.Add(groupUser);
 
             await _context.SaveChangesAsync();
 
-
             return Ok();
         }
+
 
         private bool GroupExists(int id)
         {

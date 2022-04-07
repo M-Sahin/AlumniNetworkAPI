@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AlumniNetworkAPI.Migrations
 {
     [DbContext(typeof(AlumniNetworkDbContext))]
-    [Migration("20220407095134_Migation01")]
-    partial class Migation01
+    [Migration("20220407133024_Migration01")]
+    partial class Migration01
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,50 @@ namespace AlumniNetworkAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.15")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("AlumniNetworkAPI.Models.Domain.Event", b =>
+                {
+                    b.Property<int>("Event_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("AllowGuests")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Banner_Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CreatedByUserId")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("LastUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(12)
+                        .HasColumnType("nvarchar(12)");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Event_Id");
+
+                    b.HasIndex("CreatedByUserId");
+
+                    b.ToTable("Events");
+                });
 
             modelBuilder.Entity("AlumniNetworkAPI.Models.Domain.Group", b =>
                 {
@@ -48,25 +92,15 @@ namespace AlumniNetworkAPI.Migrations
 
             modelBuilder.Entity("AlumniNetworkAPI.Models.Domain.GroupUser", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Groupsgroup_id")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UseruserId")
+                    b.Property<int>("GroupId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("group_id")
-                        .HasColumnType("int");
+                    b.HasKey("UserId", "GroupId");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("UseruserId");
-
-                    b.HasIndex("group_id");
+                    b.HasIndex("GroupId");
 
                     b.ToTable("GroupUsers");
                 });
@@ -87,7 +121,6 @@ namespace AlumniNetworkAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("SenderUserId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("TargetGroupId")
@@ -150,6 +183,9 @@ namespace AlumniNetworkAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("KeycloakId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("bio")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -210,21 +246,34 @@ namespace AlumniNetworkAPI.Migrations
                     b.ToTable("TopicUser");
                 });
 
-            modelBuilder.Entity("AlumniNetworkAPI.Models.Domain.GroupUser", b =>
+            modelBuilder.Entity("AlumniNetworkAPI.Models.Domain.Event", b =>
                 {
-                    b.HasOne("AlumniNetworkAPI.Models.Domain.User", "user")
-                        .WithMany()
-                        .HasForeignKey("UseruserId")
+                    b.HasOne("AlumniNetworkAPI.Models.Domain.User", "CreatedByUser")
+                        .WithMany("Events")
+                        .HasForeignKey("CreatedByUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AlumniNetworkAPI.Models.Domain.Group", "group")
-                        .WithMany()
-                        .HasForeignKey("group_id");
+                    b.Navigation("CreatedByUser");
+                });
 
-                    b.Navigation("group");
+            modelBuilder.Entity("AlumniNetworkAPI.Models.Domain.GroupUser", b =>
+                {
+                    b.HasOne("AlumniNetworkAPI.Models.Domain.Group", "Group")
+                        .WithMany("GroupUsers")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("user");
+                    b.HasOne("AlumniNetworkAPI.Models.Domain.User", "User")
+                        .WithMany("GroupUsers")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Group");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("AlumniNetworkAPI.Models.Domain.Post", b =>
@@ -235,9 +284,7 @@ namespace AlumniNetworkAPI.Migrations
 
                     b.HasOne("AlumniNetworkAPI.Models.Domain.User", "SenderUser")
                         .WithMany("SenderPosts")
-                        .HasForeignKey("SenderUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SenderUserId");
 
                     b.HasOne("AlumniNetworkAPI.Models.Domain.Group", "TargetGroup")
                         .WithMany("Posts")
@@ -294,6 +341,8 @@ namespace AlumniNetworkAPI.Migrations
 
             modelBuilder.Entity("AlumniNetworkAPI.Models.Domain.Group", b =>
                 {
+                    b.Navigation("GroupUsers");
+
                     b.Navigation("Posts");
                 });
 
@@ -309,6 +358,10 @@ namespace AlumniNetworkAPI.Migrations
 
             modelBuilder.Entity("AlumniNetworkAPI.Models.Domain.User", b =>
                 {
+                    b.Navigation("Events");
+
+                    b.Navigation("GroupUsers");
+
                     b.Navigation("SenderPosts");
 
                     b.Navigation("TargetPosts");

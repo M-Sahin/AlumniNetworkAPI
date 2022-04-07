@@ -47,7 +47,8 @@ namespace AlumniNetworkAPI.Migrations
                     gender = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     status = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     bio = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    fun_fact = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
+                    fun_fact = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    KeycloakId = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -55,24 +56,26 @@ namespace AlumniNetworkAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "GroupUser",
+                name: "Events",
                 columns: table => new
                 {
-                    Groupsgroup_id = table.Column<int>(type: "int", nullable: false),
-                    UsersuserId = table.Column<int>(type: "int", nullable: false)
+                    Event_Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedByUserId = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    AllowGuests = table.Column<bool>(type: "bit", nullable: false),
+                    Banner_Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndTime = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GroupUser", x => new { x.Groupsgroup_id, x.UsersuserId });
+                    table.PrimaryKey("PK_Events", x => x.Event_Id);
                     table.ForeignKey(
-                        name: "FK_GroupUser_Groups_Groupsgroup_id",
-                        column: x => x.Groupsgroup_id,
-                        principalTable: "Groups",
-                        principalColumn: "group_id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_GroupUser_Users_UsersuserId",
-                        column: x => x.UsersuserId,
+                        name: "FK_Events_Users_CreatedByUserId",
+                        column: x => x.CreatedByUserId,
                         principalTable: "Users",
                         principalColumn: "userId",
                         onDelete: ReferentialAction.Cascade);
@@ -87,7 +90,7 @@ namespace AlumniNetworkAPI.Migrations
                     Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Body = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     TimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    SenderUserId = table.Column<int>(type: "int", nullable: false),
+                    SenderUserId = table.Column<int>(type: "int", nullable: true),
                     ReplyParentId = table.Column<int>(type: "int", nullable: true),
                     TargetUserId = table.Column<int>(type: "int", nullable: true),
                     TargetGroupId = table.Column<int>(type: "int", nullable: true),
@@ -153,9 +156,10 @@ namespace AlumniNetworkAPI.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_GroupUser_UsersuserId",
-                table: "GroupUser",
-                column: "UsersuserId");
+                name: "IX_Events_CreatedByUserId",
+                table: "Events",
+                column: "CreatedByUserId");
+
 
             migrationBuilder.CreateIndex(
                 name: "IX_Posts_ReplyParentId",
@@ -191,7 +195,8 @@ namespace AlumniNetworkAPI.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "GroupUser");
+                name: "Events");
+
 
             migrationBuilder.DropTable(
                 name: "Posts");
