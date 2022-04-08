@@ -38,7 +38,9 @@ namespace AlumniNetworkAPI.Models.Domain
         public ICollection<Event> Events { get; set; }
 
         public ICollection<GroupUser> GroupUsers { get; set; }
+        public ICollection<EventUserInvite> EventUserInvites { get; set; }
 
+        public ICollection<RSVP> RSVPs { get; set; }
 
 
 

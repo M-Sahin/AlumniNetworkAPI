@@ -116,6 +116,146 @@ namespace AlumniNetworkAPI.Controllers
             return NoContent();
         }
 
+        // GET: api/Groups/5
+        [HttpPost("{EventId}/invite/group/{GroupId}")]
+        public async Task<ActionResult<Event>> PostGroupEventInvite(int GroupId, int EventId)
+        {
+
+            EventGroupInvite eventGroupInvite = new EventGroupInvite();
+            eventGroupInvite.GroupId = GroupId;
+            eventGroupInvite.EventId = EventId;
+
+            _context.EventGroupInvites.Add(eventGroupInvite);
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        // DELETE: api/Events/5
+        [HttpDelete("{EventId}/invite/group/{GroupId}")]
+        public async Task<IActionResult> DeleteEventGroupInvite(int EventId, int GroupId)
+        {
+            //var @event = await _context.EventGroupInvites.FindAsync(id);
+            var @event = await _context.EventGroupInvites.AsNoTracking().FirstOrDefaultAsync(m => m.GroupId == GroupId && m.EventId == EventId);
+
+            if (@event == null)
+            {
+                return NotFound();
+            }
+
+            _context.EventGroupInvites.Remove(@event);
+
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        // GET: api/Groups/5
+        [HttpPost("{EventId}/invite/topic/{TopicId}")]
+        public async Task<ActionResult<Event>> TopicEventInvite(int TopicId, int EventId)
+        {
+
+            EventTopicInvite eventTopicInvite = new EventTopicInvite();
+            eventTopicInvite.TopicId = TopicId;
+            eventTopicInvite.EventId = EventId;
+
+            _context.EventTopicInvites.Add(eventTopicInvite);
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        // DELETE: api/Events/5
+        [HttpDelete("{EventId}/invite/topic/{TopicId}")]
+        public async Task<IActionResult> DeleteEventTopicInvite(int EventId, int TopicId)
+        {
+            var @event = await _context.EventTopicInvites.AsNoTracking().FirstOrDefaultAsync(m => m.TopicId == TopicId && m.EventId == EventId);
+
+            if (@event == null)
+            {
+                return NotFound();
+            }
+
+            _context.EventTopicInvites.Remove(@event);
+
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        // GET: api/Groups/5
+        [HttpPost("{EventId}/invite/user/{UserId}")]
+        public async Task<ActionResult<Event>> EventUserInvite(int UserId, int EventId)
+        {
+
+            EventUserInvite eventUserInvite = new EventUserInvite();
+            eventUserInvite.UserId = UserId;
+            eventUserInvite.EventId = EventId;
+
+            _context.EventUserInvites.Add(eventUserInvite);
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        // DELETE: api/Events/5
+        [HttpDelete("{EventId}/invite/user/{UserId}")]
+        public async Task<IActionResult> DeleteEventUserInvite(int EventId, int UserId)
+        {
+            var @event = await _context.EventUserInvites.AsNoTracking().FirstOrDefaultAsync(m => m.UserId == UserId && m.EventId == EventId);
+
+            if (@event == null)
+            {
+                return NotFound();
+            }
+
+            _context.EventUserInvites.Remove(@event);
+
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        // GET: api/Groups/5
+        [HttpPost("event/{EventId}/rsvp/{UserId}")]
+        public async Task<ActionResult<Event>> RSVP(int UserId, int EventId)
+        {
+            if(RSVPExists(EventId, UserId))
+            {
+               return NoContent();
+            }
+
+            var rsvpCount = _context.RSVPs.Where(a => a.EventId == EventId).ToList().Count();
+            rsvpCount++;
+
+            RSVP rsvpDomain = new RSVP();
+            rsvpDomain.UserId = UserId;
+            rsvpDomain.EventId = EventId;
+            rsvpDomain.Last_Updated = DateTime.Now;
+            rsvpDomain.Guest_Count = rsvpCount;
+
+
+            _context.RSVPs.Add(rsvpDomain);
+
+            var allRSVPs = _context.RSVPs.Where(a => a.EventId == EventId).ToList();
+
+            foreach (RSVP rsvp in allRSVPs)
+            {
+                rsvp.Guest_Count = rsvpCount;
+                _context.Entry(rsvp).State = EntityState.Modified;
+            }
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+        private bool RSVPExists(int EventId, int UserId)
+        {
+            return _context.RSVPs.Any(e => e.EventId == EventId && e.UserId == UserId);
+        }
         private bool EventExists(int id)
         {
             return _context.Events.Any(e => e.Event_Id == id);

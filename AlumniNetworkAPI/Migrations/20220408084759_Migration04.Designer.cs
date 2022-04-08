@@ -4,14 +4,16 @@ using AlumniNetworkAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AlumniNetworkAPI.Migrations
 {
     [DbContext(typeof(AlumniNetworkDbContext))]
-    partial class AlumniNetworkDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220408084759_Migration04")]
+    partial class Migration04
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -230,34 +232,6 @@ namespace AlumniNetworkAPI.Migrations
                     b.ToTable("Posts");
                 });
 
-            modelBuilder.Entity("AlumniNetworkAPI.Models.Domain.RSVP", b =>
-                {
-                    b.Property<int>("RSVP_Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("EventId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Guest_Count")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Last_Updated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("RSVP_Id");
-
-                    b.HasIndex("EventId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("RSVPs");
-                });
-
             modelBuilder.Entity("AlumniNetworkAPI.Models.Domain.Topic", b =>
                 {
                     b.Property<int>("topic_id")
@@ -474,25 +448,6 @@ namespace AlumniNetworkAPI.Migrations
                     b.Navigation("TargetUser");
                 });
 
-            modelBuilder.Entity("AlumniNetworkAPI.Models.Domain.RSVP", b =>
-                {
-                    b.HasOne("AlumniNetworkAPI.Models.Domain.Event", "Event")
-                        .WithMany("RSVPs")
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AlumniNetworkAPI.Models.Domain.User", "User")
-                        .WithMany("RSVPs")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Event");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("GroupUser", b =>
                 {
                     b.HasOne("AlumniNetworkAPI.Models.Domain.Group", null)
@@ -530,8 +485,6 @@ namespace AlumniNetworkAPI.Migrations
                     b.Navigation("EventTopicInvites");
 
                     b.Navigation("EventUserInvites");
-
-                    b.Navigation("RSVPs");
                 });
 
             modelBuilder.Entity("AlumniNetworkAPI.Models.Domain.Group", b =>
@@ -562,8 +515,6 @@ namespace AlumniNetworkAPI.Migrations
                     b.Navigation("EventUserInvites");
 
                     b.Navigation("GroupUsers");
-
-                    b.Navigation("RSVPs");
 
                     b.Navigation("SenderPosts");
 

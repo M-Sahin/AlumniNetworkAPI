@@ -17,6 +17,7 @@ namespace AlumniNetworkAPI.Models.Domain
 
         public ICollection<User> Users { get; set; }
         public ICollection<Post> Posts { get; set; }
+        public ICollection<EventTopicInvite> EventTopicInvites { get; set; }
 
     }
 }

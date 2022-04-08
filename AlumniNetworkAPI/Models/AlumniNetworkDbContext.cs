@@ -17,20 +17,12 @@ namespace AlumniNetworkAPI.Models
         public DbSet<Post> Posts { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<GroupUser> GroupUsers { get; set; }
+        public DbSet<EventGroupInvite> EventGroupInvites { get; set; }
+        public DbSet<EventTopicInvite> EventTopicInvites { get; set; }
+        public DbSet<EventUserInvite> EventUserInvites { get; set; }
+        public DbSet<RSVP> RSVPs { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<GroupUser>()
-                .HasKey(bc => new { bc.UserId, bc.GroupId });
-            modelBuilder.Entity<GroupUser>()
-                .HasOne(bc => bc.User)
-                .WithMany(b => b.GroupUsers)
-                .HasForeignKey(bc => bc.UserId);
-            modelBuilder.Entity<GroupUser>()
-                .HasOne(bc => bc.Group)
-                .WithMany(c => c.GroupUsers)
-                .HasForeignKey(bc => bc.GroupId);
-        }
+
         public AlumniNetworkDbContext(DbContextOptions options) : base(options)
             {
 

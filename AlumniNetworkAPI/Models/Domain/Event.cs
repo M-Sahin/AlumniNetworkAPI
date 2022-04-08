@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using AlumniNetworkAPI.Models.Domain;
 
@@ -33,6 +34,10 @@ namespace AlumniNetworkAPI.Models.Domain
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
 
+        public ICollection<EventGroupInvite> EventGroupInvites { get; set; }
+        public ICollection<EventTopicInvite> EventTopicInvites { get; set; }
+        public ICollection<EventUserInvite> EventUserInvites { get; set; }
+        public ICollection<RSVP> RSVPs { get; set; }
 
 
     }
