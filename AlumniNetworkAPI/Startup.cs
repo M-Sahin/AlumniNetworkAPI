@@ -24,6 +24,7 @@ namespace AlumniNetworkAPI
 {
     public class Startup
     {
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -73,6 +74,7 @@ namespace AlumniNetworkAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AlumniNetworkAPI", Version = "v1" });
             });
+           services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -82,12 +84,14 @@ namespace AlumniNetworkAPI
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AlumniNetworkAPI v1"));
+                app.UseSwaggerUI();
+
+                
             }
 
             app.UseHttpsRedirection();
 
+            
             app.UseRouting();
 
             app.UseAuthorization();
