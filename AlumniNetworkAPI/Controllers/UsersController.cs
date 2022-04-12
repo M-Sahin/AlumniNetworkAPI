@@ -12,26 +12,46 @@ using AutoMapper;
 using System.Security.Claims;
 using System.Net.Mime;
 using Microsoft.AspNetCore.Authorization;
+using AlumniNetworkAPI.Services;
+using AlumniNetworkAPI.Extensions;
+
 
 namespace AlumniNetworkAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
+    [Produces(MediaTypeNames.Application.Json)]
+    [Consumes(MediaTypeNames.Application.Json)]
+    [ApiConventionType(typeof(DefaultApiConventions))]
     public class UsersController : ControllerBase
     {
         private readonly AlumniNetworkDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IUserService _userService;
 
-        public UsersController(AlumniNetworkDbContext context, IMapper mapper)
+        public UsersController(AlumniNetworkDbContext context, IMapper mapper, IUserService userService)
 
         {
             _context = context;
             _mapper = mapper;
+            _userService = userService;
         }
 
         //GET for fetching authenticated user
-        
-        
+        [HttpGet("keycloak/{id}")]
+        public async Task<ActionResult<User>> GetUser(string keycloakid)
+        {
+            var user = await _userService.FindUserByKeycloakIdAsync(keycloakid);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return user;
+        }
+
         // GET: api/Users
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()

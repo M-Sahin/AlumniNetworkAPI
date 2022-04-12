@@ -4,14 +4,16 @@ using AlumniNetworkAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AlumniNetworkAPI.Migrations
 {
     [DbContext(typeof(AlumniNetworkDbContext))]
-    partial class AlumniNetworkDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220412090730_keycloak")]
+    partial class keycloak
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,31 +44,6 @@ namespace AlumniNetworkAPI.Migrations
                     b.HasKey("group_id");
 
                     b.ToTable("Groups");
-                });
-
-            modelBuilder.Entity("AlumniNetworkAPI.Models.Domain.GroupUser", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Groupsgroup_id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UseruserId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("group_id")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UseruserId");
-
-                    b.HasIndex("group_id");
-
-                    b.ToTable("GroupUsers");
                 });
 
             modelBuilder.Entity("AlumniNetworkAPI.Models.Domain.Post", b =>
@@ -209,23 +186,6 @@ namespace AlumniNetworkAPI.Migrations
                     b.HasIndex("UsersuserId");
 
                     b.ToTable("TopicUser");
-                });
-
-            modelBuilder.Entity("AlumniNetworkAPI.Models.Domain.GroupUser", b =>
-                {
-                    b.HasOne("AlumniNetworkAPI.Models.Domain.User", "user")
-                        .WithMany()
-                        .HasForeignKey("UseruserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AlumniNetworkAPI.Models.Domain.Group", "group")
-                        .WithMany()
-                        .HasForeignKey("group_id");
-
-                    b.Navigation("group");
-
-                    b.Navigation("user");
                 });
 
             modelBuilder.Entity("AlumniNetworkAPI.Models.Domain.Post", b =>
