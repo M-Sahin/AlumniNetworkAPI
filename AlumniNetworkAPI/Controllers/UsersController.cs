@@ -21,6 +21,9 @@ namespace AlumniNetworkAPI.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
+    [Produces(MediaTypeNames.Application.Json)]
+    [Consumes(MediaTypeNames.Application.Json)]
+    [ApiConventionType(typeof(DefaultApiConventions))]
     public class UsersController : ControllerBase
     {
         private readonly AlumniNetworkDbContext _context;
@@ -36,18 +39,18 @@ namespace AlumniNetworkAPI.Controllers
         }
 
         //GET for fetching authenticated user
-        [HttpGet]
-        public async Task<IActionResult> GetUserAsync()
+        [HttpGet("keycloak/{id}")]
+        public async Task<ActionResult<User>> GetUser(string keycloakid)
         {
-            string keycloakId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            User user = await _userService.FindUserByKeycloakIdAsync(keycloakId);
+            var user = await _userService.FindUserByKeycloakIdAsync(keycloakid);
+
             if (user == null)
             {
-                return StatusCode(StatusCodes.Status403Forbidden, "Access denied: Could not verify user.");
+                return NotFound();
             }
-            return this.SeeOther($"/api/[controller]/{user.userId}");
-        }
 
+            return user;
+        }
 
         // GET: api/Users
         [HttpGet]

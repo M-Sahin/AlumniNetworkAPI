@@ -82,6 +82,7 @@ namespace AlumniNetworkAPI
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
+                app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AlumniNetworkAPI v1"));
             }
 
