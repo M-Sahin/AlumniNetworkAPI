@@ -10,10 +10,15 @@ using AlumniNetworkAPI.Models.Domain;
 using AlumniNetworkAPI.Models.DTO.Post;
 using AlumniNetworkAPI.Models.DTO.Event;
 using AutoMapper;
+using System.Web.Http.Cors;
+
+
 namespace AlumniNetworkAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
+
     public class EventsController : ControllerBase
     {
         private readonly AlumniNetworkDbContext _context;
