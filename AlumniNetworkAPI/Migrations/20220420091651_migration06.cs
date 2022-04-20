@@ -7,12 +7,6 @@ namespace AlumniNetworkAPI.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "RepliesReply_Id",
-                table: "Posts",
-                type: "int",
-                nullable: true);
-
             migrationBuilder.CreateTable(
                 name: "Replies",
                 columns: table => new
@@ -54,11 +48,6 @@ namespace AlumniNetworkAPI.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Posts_RepliesReply_Id",
-                table: "Posts",
-                column: "RepliesReply_Id");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_PostReplies_Postpost_id",
                 table: "PostReplies",
                 column: "Postpost_id");
@@ -67,35 +56,15 @@ namespace AlumniNetworkAPI.Migrations
                 name: "IX_PostReplies_Replyreply_Id",
                 table: "PostReplies",
                 column: "Replyreply_Id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Posts_Replies_RepliesReply_Id",
-                table: "Posts",
-                column: "RepliesReply_Id",
-                principalTable: "Replies",
-                principalColumn: "Reply_Id",
-                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Posts_Replies_RepliesReply_Id",
-                table: "Posts");
-
             migrationBuilder.DropTable(
                 name: "PostReplies");
 
             migrationBuilder.DropTable(
                 name: "Replies");
-
-            migrationBuilder.DropIndex(
-                name: "IX_Posts_RepliesReply_Id",
-                table: "Posts");
-
-            migrationBuilder.DropColumn(
-                name: "RepliesReply_Id",
-                table: "Posts");
         }
     }
 }

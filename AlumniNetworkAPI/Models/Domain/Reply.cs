@@ -15,8 +15,5 @@ namespace AlumniNetworkAPI.Models.Domain
 
         public DateTime TimeStamp { get; set; }
 
-        public ICollection<Post> Posts { get; set; }
-
-
     }
 }

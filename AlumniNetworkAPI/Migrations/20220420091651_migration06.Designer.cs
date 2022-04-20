@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AlumniNetworkAPI.Migrations
 {
     [DbContext(typeof(AlumniNetworkDbContext))]
-    [Migration("20220420081633_migration06")]
+    [Migration("20220420091651_migration06")]
     partial class migration06
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -195,9 +195,6 @@ namespace AlumniNetworkAPI.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<int?>("RepliesReply_Id")
-                        .HasColumnType("int");
-
                     b.Property<int?>("ReplyParentId")
                         .HasColumnType("int");
 
@@ -221,8 +218,6 @@ namespace AlumniNetworkAPI.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Post_Id");
-
-                    b.HasIndex("RepliesReply_Id");
 
                     b.HasIndex("ReplyParentId");
 
@@ -287,7 +282,7 @@ namespace AlumniNetworkAPI.Migrations
                     b.ToTable("RSVPs");
                 });
 
-            modelBuilder.Entity("AlumniNetworkAPI.Models.Domain.Replies", b =>
+            modelBuilder.Entity("AlumniNetworkAPI.Models.Domain.Reply", b =>
                 {
                     b.Property<int>("Reply_Id")
                         .ValueGeneratedOnAdd()
@@ -492,10 +487,6 @@ namespace AlumniNetworkAPI.Migrations
 
             modelBuilder.Entity("AlumniNetworkAPI.Models.Domain.Post", b =>
                 {
-                    b.HasOne("AlumniNetworkAPI.Models.Domain.Replies", null)
-                        .WithMany("Posts")
-                        .HasForeignKey("RepliesReply_Id");
-
                     b.HasOne("AlumniNetworkAPI.Models.Domain.Post", "ReplyParent")
                         .WithMany("Replies")
                         .HasForeignKey("ReplyParentId");
@@ -535,7 +526,7 @@ namespace AlumniNetworkAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AlumniNetworkAPI.Models.Domain.Replies", "reply")
+                    b.HasOne("AlumniNetworkAPI.Models.Domain.Reply", "reply")
                         .WithMany()
                         .HasForeignKey("Replyreply_Id")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -618,11 +609,6 @@ namespace AlumniNetworkAPI.Migrations
             modelBuilder.Entity("AlumniNetworkAPI.Models.Domain.Post", b =>
                 {
                     b.Navigation("Replies");
-                });
-
-            modelBuilder.Entity("AlumniNetworkAPI.Models.Domain.Replies", b =>
-                {
-                    b.Navigation("Posts");
                 });
 
             modelBuilder.Entity("AlumniNetworkAPI.Models.Domain.Topic", b =>

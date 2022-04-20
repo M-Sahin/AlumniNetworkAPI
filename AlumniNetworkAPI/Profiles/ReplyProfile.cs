@@ -14,8 +14,6 @@ namespace AlumniNetworkAPI.Profiles
                 .ReverseMap();
 
             CreateMap<Reply, ReplyReadDTO>()
-                .ForMember(fdto => fdto.Posts, opt => opt
-                .MapFrom(f => f.Posts.Select(m => m.Replies).ToArray()))
                 .ReverseMap();
 
             CreateMap<Reply, ReplyUpdateDTO>()

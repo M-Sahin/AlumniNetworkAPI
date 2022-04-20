@@ -37,7 +37,7 @@ namespace AlumniNetworkAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ReplyReadDTO>> GetReplies(int id)
         {
-            var reply = await _context.Replies.Include(m => m.Posts).FirstOrDefaultAsync(m => m.Reply_Id == id);
+            var reply = await _context.Replies.FirstOrDefaultAsync(m => m.Reply_Id == id);
 
 
 
@@ -59,7 +59,7 @@ namespace AlumniNetworkAPI.Controllers
         [HttpPatch("{id}")]
         public async Task<IActionResult> RepliesUpdate(int id, ReplyUpdateDTO newReply)
         {
-            var oldReply = await _context.Replies.AsNoTracking().Include(m => m.Posts).FirstOrDefaultAsync(m => m.Reply_Id == id);
+            var oldReply = await _context.Replies.AsNoTracking().FirstOrDefaultAsync(m => m.Reply_Id == id);
 
             var domainReply = _mapper.Map<Reply>(newReply);
 
