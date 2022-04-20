@@ -19,7 +19,7 @@ namespace AlumniNetworkAPI.Models.Domain
 
         public DateTime TimeStamp { get; set; }
 
-        [Required]
+        
         public int? SenderUserId { get; set; }
         public User SenderUser { get; set; }
 

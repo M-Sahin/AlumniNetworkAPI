@@ -28,6 +28,7 @@ namespace AlumniNetworkAPI
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
         }
 
         public IConfiguration Configuration { get; }
@@ -64,11 +65,14 @@ namespace AlumniNetworkAPI
            });
 
             services.AddDbContext<AlumniNetworkDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();
+            services.AddCors( options => options.AddDefaultPolicy(
+                builder => builder.AllowAnyOrigin()
+                ));
             services.AddAutoMapper(typeof(Startup));
             services.AddDbContext<AlumniNetworkDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddSwaggerGen(c =>
             {
@@ -93,6 +97,8 @@ namespace AlumniNetworkAPI
 
             
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
 

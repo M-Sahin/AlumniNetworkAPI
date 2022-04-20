@@ -10,13 +10,13 @@ namespace AlumniNetworkAPI.Profiles
     {
         public EventProfile()
         {
-            CreateMap<Post, EventCreateDTO>()
+            CreateMap<Event, EventCreateDTO>()
                 .ReverseMap();
 
-            CreateMap<Post, EventReadDTO>()
+            CreateMap<Event, EventReadDTO>()
                 .ReverseMap();
 
-            CreateMap<Post, EventUpdateDTO>()
+            CreateMap<Event, EventUpdateDTO>()
                 .ReverseMap();
         }
     }

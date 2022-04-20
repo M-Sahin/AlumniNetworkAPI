@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using AlumniNetworkAPI.Models.Domain;
 
@@ -8,9 +9,13 @@ namespace AlumniNetworkAPI.Models.Domain
     {
 
         [Key]
-        public User Created_By { get; set; }   
+
         public int Event_Id { get; set; }
-        
+
+        [Required]
+        public int? CreatedByUserId { get; set; }
+        public User CreatedByUser { get; set; }
+
         [Required]
         [MaxLength(12, ErrorMessage = "Name cant be longer than 12 characters.")]
         public string Name { get; set; }
@@ -25,8 +30,14 @@ namespace AlumniNetworkAPI.Models.Domain
         [Url]
         [Required]
         public string Banner_Image { get; set; }
+        public DateTime LastUpdated { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
 
-        //Hieronder moet start en eiddatum komen
+        public ICollection<EventGroupInvite> EventGroupInvites { get; set; }
+        public ICollection<EventTopicInvite> EventTopicInvites { get; set; }
+        public ICollection<EventUserInvite> EventUserInvites { get; set; }
+        public ICollection<RSVP> RSVPs { get; set; }
 
 
     }
