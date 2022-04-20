@@ -10,7 +10,7 @@ namespace AlumniNetworkAPI.Models.Domain
         public Post post { get; set; }
 
         public int Replyreply_Id { get; set; }
-        public Replies reply { get; set; }
+        public Reply reply { get; set; }
 
     }
 }

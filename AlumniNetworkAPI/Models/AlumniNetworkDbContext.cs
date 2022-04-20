@@ -21,6 +21,9 @@ namespace AlumniNetworkAPI.Models
         public DbSet<EventTopicInvite> EventTopicInvites { get; set; }
         public DbSet<EventUserInvite> EventUserInvites { get; set; }
         public DbSet<RSVP> RSVPs { get; set; }
+        public DbSet<Reply> Replies { get; set; }
+        public DbSet<PostReplies> PostReplies { get; set; }
+
 
 
         public AlumniNetworkDbContext(DbContextOptions options) : base(options)

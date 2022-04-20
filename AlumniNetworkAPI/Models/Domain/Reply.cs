@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AlumniNetworkAPI.Models.Domain
 {
-    public class Replies
+    public class Reply
     {
         [Key]
         public int Reply_Id { get; set; }
