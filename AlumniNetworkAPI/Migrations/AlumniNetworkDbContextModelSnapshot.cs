@@ -292,6 +292,9 @@ namespace AlumniNetworkAPI.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
+                    b.Property<int?>("PostReplyPost_Id")
+                        .HasColumnType("int");
+
                     b.Property<int>("Post_Id")
                         .HasColumnType("int");
 
@@ -299,6 +302,8 @@ namespace AlumniNetworkAPI.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Reply_Id");
+
+                    b.HasIndex("PostReplyPost_Id");
 
                     b.ToTable("Replies");
                 });
@@ -489,7 +494,7 @@ namespace AlumniNetworkAPI.Migrations
             modelBuilder.Entity("AlumniNetworkAPI.Models.Domain.Post", b =>
                 {
                     b.HasOne("AlumniNetworkAPI.Models.Domain.Post", "ReplyParent")
-                        .WithMany("Replies")
+                        .WithMany()
                         .HasForeignKey("ReplyParentId");
 
                     b.HasOne("AlumniNetworkAPI.Models.Domain.User", "SenderUser")
@@ -555,6 +560,15 @@ namespace AlumniNetworkAPI.Migrations
                     b.Navigation("Event");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("AlumniNetworkAPI.Models.Domain.Reply", b =>
+                {
+                    b.HasOne("AlumniNetworkAPI.Models.Domain.Post", "PostReply")
+                        .WithMany("Replies")
+                        .HasForeignKey("PostReplyPost_Id");
+
+                    b.Navigation("PostReply");
                 });
 
             modelBuilder.Entity("GroupUser", b =>
