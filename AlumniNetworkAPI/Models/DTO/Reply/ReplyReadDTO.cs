@@ -7,6 +7,7 @@ namespace AlumniNetworkAPI.Models.DTO.Replies
     public class ReplyReadDTO
     {
         public int Reply_Id { get; set; }
+        public int Post_Id { get; set; }
 
         public string Body { get; set; }
 
