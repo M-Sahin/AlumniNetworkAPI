@@ -93,7 +93,7 @@ namespace AlumniNetworkAPI.Controllers
         // Replies: api/Reply
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<ReplyReadDTO>> Replyreply([FromBody] ReplyCreateDTO reply)
+        public async Task<ActionResult<ReplyReadDTO>> PostReply([FromBody] ReplyCreateDTO reply)
         {
             var domainReply = _mapper.Map<Reply>(reply);
 
@@ -105,7 +105,7 @@ namespace AlumniNetworkAPI.Controllers
 
             var ReplyToSend = _mapper.Map<ReplyReadDTO>(domainReply);
 
-            return CreatedAtAction("getReply", new { id = domainReply.Reply_Id }, ReplyToSend);
+            return CreatedAtAction("PostReply", new { id = domainReply.Reply_Id }, ReplyToSend);
         }
 
         // DELETE: api/Replies/5

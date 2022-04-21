@@ -64,6 +64,7 @@ namespace AlumniNetworkAPI
                };
            });
 
+
             services.AddDbContext<AlumniNetworkDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();
