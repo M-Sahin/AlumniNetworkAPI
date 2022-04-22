@@ -35,7 +35,6 @@ namespace AlumniNetworkAPI.Models.Domain
         public int? TargetTopicId { get; set; }
         public Topic TargetTopic { get; set; }
 
-        [InverseProperty("PostReply")]
         public ICollection<Reply> Replies { get; set; }
 
 

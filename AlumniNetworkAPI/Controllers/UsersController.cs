@@ -21,9 +21,6 @@ namespace AlumniNetworkAPI.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    [Produces(MediaTypeNames.Application.Json)]
-    [Consumes(MediaTypeNames.Application.Json)]
-    [ApiConventionType(typeof(DefaultApiConventions))]
     public class UsersController : ControllerBase
     {
         private readonly AlumniNetworkDbContext _context;

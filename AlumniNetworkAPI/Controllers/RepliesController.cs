@@ -108,6 +108,26 @@ namespace AlumniNetworkAPI.Controllers
             return CreatedAtAction("PostReply", new { id = domainReply.Reply_Id }, ReplyToSend);
         }
 
+        // GET: api/Replies/Posts/5
+        [HttpGet("post/{id}")]
+        public async Task<ActionResult<ReplyReadDTO>> getReplyByPost(int id)
+        {
+            var reply = await _context.Replies.Include(m => m.Posts).FirstOrDefaultAsync(m => m.Post_Id == id);
+
+
+
+            if (reply == null)
+            {
+                return NotFound();
+            }
+
+            var replyToSend = _mapper.Map<ReplyReadDTO>(reply);
+
+
+
+            return replyToSend;
+        }
+
         // DELETE: api/Replies/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteReply(int id)
