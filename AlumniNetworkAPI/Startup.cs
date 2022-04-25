@@ -68,9 +68,16 @@ namespace AlumniNetworkAPI
             services.AddDbContext<AlumniNetworkDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();
-            services.AddCors( options => options.AddDefaultPolicy(
-                builder => builder.AllowAnyOrigin()
-                ));
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                    });
+            });
             services.AddAutoMapper(typeof(Startup));
             services.AddDbContext<AlumniNetworkDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -99,7 +106,7 @@ namespace AlumniNetworkAPI
             
             app.UseRouting();
 
-            app.UseCors();
+            app.UseCors("AllowAll");
 
             app.UseAuthorization();
 

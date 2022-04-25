@@ -10,10 +10,12 @@ using AlumniNetworkAPI.Models.Domain;
 using AlumniNetworkAPI.Models.DTO.Post;
 using AutoMapper;
 
+
 namespace AlumniNetworkAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+ 
     public class PostsController : ControllerBase
     {
         private readonly AlumniNetworkDbContext _context;

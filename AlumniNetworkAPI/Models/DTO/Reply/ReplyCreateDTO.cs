@@ -11,5 +11,8 @@ namespace AlumniNetworkAPI.Models.DTO.Replies
     {
         public string Body { get; set; }
 
+        public int Post_id { get; set; }
+
+
     }
 }
