@@ -8,8 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using AlumniNetworkAPI.Models;
 using AlumniNetworkAPI.Models.Domain;
 using AlumniNetworkAPI.Models.DTO.Post;
-using AutoMapper;
 
+using AutoMapper;
+using AlumniNetworkAPI.Models.DTO.Replies;
 
 namespace AlumniNetworkAPI.Controllers
 {
@@ -172,6 +173,22 @@ namespace AlumniNetworkAPI.Controllers
 
             return NoContent();
         }
+
+        // GEt: api/Replies/Posts/5
+
+        [HttpGet("replies/{id}")]
+        public ActionResult<IEnumerable<ReplyReadDTO>> GetAllMoviesFranchise(int id)
+        {
+            if (!PostExists(id))
+            {
+                return NotFound();
+            }
+
+            var ReplyList = _mapper.Map<List<ReplyReadDTO>>(_context.Replies.Include(p => p.Posts).Where(c => c.Post_Id == id).ToList<Reply>());
+
+            return Ok(ReplyList);
+        }
+
 
         private bool PostExists(int id)
         {
